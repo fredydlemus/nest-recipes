@@ -1,9 +1,12 @@
 import { CategoryEntity } from 'src/categories/category.entity';
+import { TagEntity } from 'src/tags/tag.entity';
 import { UserEntity } from 'src/users/user.entity';
 import {
     Column,
     Entity,
     JoinColumn,
+    JoinTable,
+    ManyToMany,
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -31,15 +34,27 @@ export class RecipeEntity {
     @Column({ name: 'image', nullable: true, type: 'string' })
     image: string;
 
-    @ManyToOne(() => CategoryEntity, (category) => category.recipes, {
-        cascade: ['remove'],
-    })
+    @ManyToOne(() => CategoryEntity, (category) => category.recipes)
     @JoinColumn({ name: 'category_id' })
     category: CategoryEntity;
 
-    @ManyToOne(() => UserEntity, (user) => user.recipes, {
-        cascade: ['remove'],
-    })
+    @ManyToOne(() => UserEntity, (user) => user.recipes)
     @JoinColumn({ name: 'user_id' })
     user: UserEntity;
+
+    @ManyToMany(() => TagEntity, (tag) => tag.recipes, {
+        cascade: ['remove'],
+    })
+    @JoinTable({
+        name: 'recipe_tag',
+        joinColumn: {
+            name: 'recipe_id',
+            referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+            name: 'tag_id',
+            referencedColumnName: 'id',
+        }
+    })
+    tags: TagEntity[];
 }

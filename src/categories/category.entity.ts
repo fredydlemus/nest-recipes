@@ -1,5 +1,5 @@
-import { RecipeEntity } from "src/recipes/recipe.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RecipeEntity } from 'src/recipes/recipe.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'category' })
 export class CategoryEntity {
@@ -12,6 +12,8 @@ export class CategoryEntity {
     @Column({ name: 'name', nullable: false, type: 'string' })
     name: string;
 
-    @OneToMany(() => RecipeEntity, (recipe) => recipe.category)
+    @OneToMany(() => RecipeEntity, (recipe) => recipe.category, {
+        cascade: ['remove'],
+    })
     recipes: RecipeEntity[];
 }

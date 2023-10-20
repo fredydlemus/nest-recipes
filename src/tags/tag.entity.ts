@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { RecipeEntity } from "src/recipes/recipe.entity";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'tag' })
 export class TagEntity {
@@ -10,4 +11,7 @@ export class TagEntity {
 
     @Column({ name: 'name', nullable: false, type: 'string' })
     name: string;
+
+    @ManyToMany(() => RecipeEntity, (recipe) => recipe.tags)
+    recipes: RecipeEntity[];
 }

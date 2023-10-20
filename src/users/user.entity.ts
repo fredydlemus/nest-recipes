@@ -12,6 +12,8 @@ export class UserEntity {
     @Column({ name: 'name', nullable: false, type: 'string' })
     name: string;
 
-    @OneToMany(() => RecipeEntity, (recipe) => recipe.user)
+    @OneToMany(() => RecipeEntity, (recipe) => recipe.user, {
+        cascade: ['remove']
+    })
     recipes: RecipeEntity[];
 }
