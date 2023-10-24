@@ -12,6 +12,12 @@ export class UserEntity {
     @Column({ name: 'name', nullable: false, type: 'text' })
     name: string;
 
+    @Column({ name: 'email', nullable: false, type: 'text' })
+    email: string;
+
+    @Column({ name: 'password', nullable: false, type: 'text' })
+    password: string;
+
     @OneToMany(() => RecipeEntity, (recipe) => recipe.user, {
         cascade: ['remove']
     })
