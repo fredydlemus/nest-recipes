@@ -9,7 +9,7 @@ export class UserEntity {
     })
     id: number;
 
-    @Column({ name: 'name', nullable: false, type: 'string' })
+    @Column({ name: 'name', nullable: false, type: 'text' })
     name: string;
 
     @OneToMany(() => RecipeEntity, (recipe) => recipe.user, {

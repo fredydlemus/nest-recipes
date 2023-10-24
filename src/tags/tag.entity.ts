@@ -9,7 +9,7 @@ export class TagEntity {
     })
     id: number;
 
-    @Column({ name: 'name', nullable: false, type: 'string' })
+    @Column({ name: 'name', nullable: false, type: 'text' })
     name: string;
 
     @ManyToMany(() => RecipeEntity, (recipe) => recipe.tags)

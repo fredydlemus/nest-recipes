@@ -19,7 +19,7 @@ export class RecipeEntity {
     })
     id: number;
 
-    @Column({ name: 'title', nullable: false, type: 'string' })
+    @Column({ name: 'title', nullable: false, type: 'text' })
     title: string;
 
     @Column({ name: 'description', nullable: false, type: 'text' })
@@ -31,7 +31,7 @@ export class RecipeEntity {
     @Column({ name: 'directions', nullable: false, type: 'text' })
     directions: string;
 
-    @Column({ name: 'image', nullable: true, type: 'string' })
+    @Column({ name: 'image', nullable: true, type: 'text' })
     image: string;
 
     @ManyToOne(() => CategoryEntity, (category) => category.recipes)
