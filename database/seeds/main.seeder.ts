@@ -1,21 +1,17 @@
 import { DataSource } from "typeorm";
 import { UserEntity } from "../../src/users/user.entity";
-import { Seeder, SeederFactoryManager, runSeeders } from "typeorm-extension";
+import { Seeder, SeederFactoryManager } from "typeorm-extension";
 import { CategoryEntity } from "../../src/categories/category.entity";
 import { RecipeEntity } from "../../src/recipes/recipe.entity";
 import { TagEntity } from "../../src/tags/tag.entity";
+import { faker } from "@faker-js/faker";
 
 export default class MainSeeder implements Seeder {
     public async run(dataSource: DataSource, factoryManager: SeederFactoryManager): Promise<any> {
 
-        const recipeRepository = dataSource.getRepository(RecipeEntity);
-        const userRepo = dataSource.getRepository(UserEntity);
-        const categoryRepo = dataSource.getRepository(CategoryEntity);
-
-        const categories = await categoryRepo.find();
-        const ramdonCategory = categories.sort(() => Math.random() - Math.random())[0];
-        const users = await userRepo.find();
-        const ramdonUser = users.sort(() => Math.random() - Math.random())[0];
+        const userRepository = dataSource.getRepository(UserEntity);
+        const categoryRepository = dataSource.getRepository(CategoryEntity);
+        const tagRepository = dataSource.getRepository(TagEntity);
 
         const userFactory = factoryManager.get(UserEntity);
         const categoryFactory = factoryManager.get(CategoryEntity);
@@ -24,15 +20,18 @@ export default class MainSeeder implements Seeder {
 
         await categoryFactory.saveMany(12);
         await userFactory.saveMany(29);
-        const recipes = await recipeFactory.saveMany(100, { user: ramdonUser, category: ramdonCategory });
-        const tags = await tagFactory.saveMany(40);
+        await tagFactory.saveMany(40);
 
-        //Many to Many
-        recipes.forEach(async (recipe) => {
-            const randomTags = tags.sort(() => Math.random() - Math.random()).slice(0, 3);
-            recipe.tags = randomTags;
-            await recipeRepository.save(recipe);
-        });
+        const users = await userRepository.find();
+        const tags = await tagRepository.find();
+        const categories = await categoryRepository.find();
 
+        await Promise.all(Array(5).fill("").map(async () => {
+            console.log((await recipeFactory.save({
+                user: faker.helpers.arrayElement(users),
+                category: faker.helpers.arrayElement(categories),
+                tags: faker.helpers.shuffle(tags).slice(0, 3)
+            })), 'aaaaa')
+        }));
     }
 }
