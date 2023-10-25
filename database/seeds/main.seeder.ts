@@ -12,6 +12,7 @@ export default class MainSeeder implements Seeder {
         const userRepository = dataSource.getRepository(UserEntity);
         const categoryRepository = dataSource.getRepository(CategoryEntity);
         const tagRepository = dataSource.getRepository(TagEntity);
+        const recipeRepository = dataSource.getRepository(RecipeEntity);
 
         const userFactory = factoryManager.get(UserEntity);
         const categoryFactory = factoryManager.get(CategoryEntity);
@@ -21,17 +22,18 @@ export default class MainSeeder implements Seeder {
         await categoryFactory.saveMany(12);
         await userFactory.saveMany(29);
         await tagFactory.saveMany(40);
+        await recipeFactory.saveMany(5);
 
         const users = await userRepository.find();
         const tags = await tagRepository.find();
         const categories = await categoryRepository.find();
+        const recipes = await recipeRepository.find();
 
-        await Promise.all(Array(5).fill("").map(async () => {
-            console.log((await recipeFactory.save({
-                user: faker.helpers.arrayElement(users),
-                category: faker.helpers.arrayElement(categories),
-                tags: faker.helpers.shuffle(tags).slice(0, 3)
-            })), 'aaaaa')
+        await Promise.all(recipes.map(async (recipe) => {
+            recipe.user = faker.helpers.arrayElement(users);
+            recipe.category = faker.helpers.arrayElement(categories);
+            recipe.tags = faker.helpers.shuffle(tags).slice(0, 3);
+            await recipeRepository.save(recipe);
         }));
     }
 }
