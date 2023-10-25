@@ -22,7 +22,7 @@ export default class MainSeeder implements Seeder {
         const recipeFactory = factoryManager.get(RecipeEntity);
         const tagFactory = factoryManager.get(TagEntity);
 
-        await categoryFactory.saveMany(12,);
+        await categoryFactory.saveMany(12);
         await userFactory.saveMany(29);
         const recipes = await recipeFactory.saveMany(100, { user: ramdonUser, category: ramdonCategory });
         const tags = await tagFactory.saveMany(40);
@@ -34,6 +34,5 @@ export default class MainSeeder implements Seeder {
             await recipeRepository.save(recipe);
         });
 
-        // await runSeeders(dataSource);
     }
 }
