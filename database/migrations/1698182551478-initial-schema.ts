@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class InitalSchema1698112000197 implements MigrationInterface {
-    name = 'InitalSchema1698112000197'
+export class InitialSchema1698182551478 implements MigrationInterface {
+    name = 'InitialSchema1698182551478'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "tag" ("tag_id" integer PRIMARY KEY NOT NULL, "name" text NOT NULL)`);
-        await queryRunner.query(`CREATE TABLE "user" ("user_id" integer PRIMARY KEY NOT NULL, "name" text NOT NULL)`);
+        await queryRunner.query(`CREATE TABLE "user" ("user_id" integer PRIMARY KEY NOT NULL, "name" text NOT NULL, "email" text NOT NULL, "password" text NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "recipe" ("recipe_id" integer PRIMARY KEY NOT NULL, "title" text NOT NULL, "description" text NOT NULL, "ingredients" text NOT NULL, "directions" text NOT NULL, "image" text, "category_id" integer, "user_id" integer)`);
         await queryRunner.query(`CREATE TABLE "category" ("category_id" integer PRIMARY KEY NOT NULL, "name" text NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "recipe_tag" ("recipe_id" integer NOT NULL, "tag_id" integer NOT NULL, PRIMARY KEY ("recipe_id", "tag_id"))`);

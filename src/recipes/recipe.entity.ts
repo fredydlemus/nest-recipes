@@ -1,6 +1,6 @@
-import { CategoryEntity } from 'src/categories/category.entity';
-import { TagEntity } from 'src/tags/tag.entity';
-import { UserEntity } from 'src/users/user.entity';
+import { CategoryEntity } from '../categories/category.entity';
+import { TagEntity } from '../tags/tag.entity';
+import { UserEntity } from '../users/user.entity';
 import {
     Column,
     Entity,

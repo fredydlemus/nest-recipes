@@ -1,11 +1,11 @@
 import { Faker } from "@faker-js/faker";
-import { UserEntity } from "src/users/user.entity";
+import { UserEntity } from "../../src/users/user.entity";
 import { setSeederFactory } from "typeorm-extension";
 
-export default setSeederFactory(UserEntity, async (faker: Faker) => {
+export const UsersFactory = setSeederFactory(UserEntity, async (faker: Faker) => {
     const user = new UserEntity();
 
-    user.name = faker.name.firstName();
+    user.name = faker.person.firstName();
     user.email = 'test@test.com';
     user.password = faker.internet.password();
 
