@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, Post, Put, Delete } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { RecipeEntity } from "src/recipes/recipe.entity";
@@ -18,5 +18,14 @@ export class RecipeController {
         const id = parseInt(recipe);
         return this._recipeRep.findOne({ where: { id }, relations: ['category', 'tags', 'user'] });
     }
+
+    @Post()
+    store() { }
+
+    @Put()
+    update() { }
+
+    @Delete()
+    destroy() { }
 
 }
