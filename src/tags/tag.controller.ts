@@ -10,13 +10,13 @@ export class TagController {
 
     @Get()
     index(): Promise<TagEntity[]> {
-        return this._tagRep.find();
+        return this._tagRep.find({ relations: ['recipes'] });
     }
 
     @Get('/:tag')
     show(@Param('tag') tag: string): Promise<TagEntity> {
         const id = parseInt(tag);
-        return this._tagRep.findOne({ where: { id } });
+        return this._tagRep.findOne({ where: { id }, relations: ['recipes'] });
     }
 
 }

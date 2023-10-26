@@ -16,7 +16,7 @@ export class CategoryController {
     @Get('/:category')
     show(@Param('category') category: string): Promise<CategoryEntity> {
         const id = parseInt(category);
-        return this._categoryRep.findOne({ where: { id } });
+        return this._categoryRep.findOne({ where: { id }, relations: ['recipes'] });
     }
 
 }

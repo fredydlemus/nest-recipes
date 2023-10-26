@@ -10,13 +10,13 @@ export class RecipeController {
 
     @Get()
     index(): Promise<RecipeEntity[]> {
-        return this._recipeRep.find();
+        return this._recipeRep.find({ relations: ['category', 'tags', 'user'] });
     }
 
     @Get('/:recipe')
     show(@Param('recipe') recipe: string): Promise<RecipeEntity> {
         const id = parseInt(recipe);
-        return this._recipeRep.findOne({ where: { id } });
+        return this._recipeRep.findOne({ where: { id }, relations: ['category', 'tags', 'user'] });
     }
 
 }
