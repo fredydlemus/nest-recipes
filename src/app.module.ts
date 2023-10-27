@@ -11,8 +11,16 @@ import { TagEntity } from './tags/tag.entity';
 import { RecipeEntity } from './recipes/recipe.entity';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(source.options), TypeOrmModule.forFeature([CategoryEntity, TagEntity, RecipeEntity])],
-  controllers: [AppController, CategoryController, TagController, RecipeController],
+  imports: [
+    TypeOrmModule.forRoot(source.options),
+    TypeOrmModule.forFeature([CategoryEntity, TagEntity, RecipeEntity]),
+  ],
+  controllers: [
+    AppController,
+    CategoryController,
+    TagController,
+    RecipeController,
+  ],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
