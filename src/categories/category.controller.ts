@@ -1,14 +1,16 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from 'src/categories/category.entity';
+import { FormatResponseInterceptor } from 'src/common/interceptors/format-response.interceptor';
 import { Repository } from 'typeorm';
 
 @Controller('categories')
+@UseInterceptors(FormatResponseInterceptor)
 export class CategoryController {
   constructor(
     @InjectRepository(CategoryEntity)
     private _categoryRep: Repository<CategoryEntity>,
-  ) {}
+  ) { }
 
   @Get()
   index(): Promise<CategoryEntity[]> {

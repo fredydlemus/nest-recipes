@@ -1,13 +1,15 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TagEntity } from 'src/tags/tag.entity';
+import { FormatResponseInterceptor } from 'src/common/interceptors/format-response.interceptor';
 
 @Controller('tags')
+@UseInterceptors(FormatResponseInterceptor)
 export class TagController {
   constructor(
     @InjectRepository(TagEntity) private _tagRep: Repository<TagEntity>,
-  ) {}
+  ) { }
 
   @Get()
   index(): Promise<TagEntity[]> {
