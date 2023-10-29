@@ -5,6 +5,7 @@ import { RecipeEntity } from 'src/recipes/recipe.entity';
 import { FormatResponseInterceptor } from 'src/common/interceptors/format-response.interceptor';
 import { RecipeDto } from './recipe.dto';
 import { plainToClass } from 'class-transformer';
+import { Serialize } from 'src/common/interceptors/serialize.interceptor';
 
 @Controller('recipes')
 @UseInterceptors(FormatResponseInterceptor)
@@ -20,18 +21,13 @@ export class RecipeController {
   }
 
   @Get('/:recipe')
-  async show(@Param('recipe') recipeId: string): Promise<RecipeDto> {
+  @Serialize(RecipeDto)
+  show(@Param('recipe') recipeId: string): Promise<RecipeEntity> {
     const id = parseInt(recipeId);
-    const recipe = await this._recipeRep.findOne({
+    return this._recipeRep.findOne({
       where: { id },
       relations: ['category', 'tags', 'user'],
     });
-
-    const recipeDto = plainToClass(RecipeDto, recipe, {
-      excludeExtraneousValues: true,
-    });
-
-    return recipeDto;
   }
 
   @Post()
