@@ -3,6 +3,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecipeEntity } from 'src/recipes/recipe.entity';
 import { FormatResponseInterceptor } from 'src/common/interceptors/format-response.interceptor';
+import { RecipeDto } from './recipe.dto';
+import { plainToClass } from 'class-transformer';
 
 @Controller('recipes')
 @UseInterceptors(FormatResponseInterceptor)
@@ -18,12 +20,18 @@ export class RecipeController {
   }
 
   @Get('/:recipe')
-  show(@Param('recipe') recipe: string): Promise<RecipeEntity> {
-    const id = parseInt(recipe);
-    return this._recipeRep.findOne({
+  async show(@Param('recipe') recipeId: string): Promise<RecipeDto> {
+    const id = parseInt(recipeId);
+    const recipe = await this._recipeRep.findOne({
       where: { id },
       relations: ['category', 'tags', 'user'],
     });
+
+    const recipeDto = plainToClass(RecipeDto, recipe, {
+      excludeExtraneousValues: true,
+    });
+
+    return recipeDto;
   }
 
   @Post()
