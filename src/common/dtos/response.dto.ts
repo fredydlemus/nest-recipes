@@ -1,5 +1,5 @@
 import { ResourceDTO } from "./resource.dto";
 
-export class CollectionDTO<T>{
+export class ResponseDTO<T>{
     data: ResourceDTO<T>[] | ResourceDTO<T>;
 }

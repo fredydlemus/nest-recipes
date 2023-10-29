@@ -1,21 +1,23 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
-import { CollectionDTO } from "../dtos/collection.dto";
 import { ResourceDTO } from "../dtos/resource.dto";
 import { Observable, map } from "rxjs";
+import { ResponseDTO } from "../dtos/response.dto";
 
 function isRelation(value) {
     return typeof value === 'object' && value !== null;
 }
 
 @Injectable()
-export class FormatResponseInterceptor<T> implements NestInterceptor<T, CollectionDTO<T> | ResourceDTO<T>>
+export class FormatResponseInterceptor<T> implements NestInterceptor<T, ResponseDTO<T>>
 {
-    intercept(context: ExecutionContext, next: CallHandler<T>): Observable<CollectionDTO<T> | ResourceDTO<T>> {
+    intercept(context: ExecutionContext, next: CallHandler<T>): Observable<ResponseDTO<T>> {
         return next.handle().pipe(map(data => {
             if (Array.isArray(data)) {
+
                 return {
                     data: data.map(item => {
                         const { id, ...rest } = item;
+
                         return {
                             id,
                             attributes: rest,

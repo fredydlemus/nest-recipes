@@ -13,7 +13,7 @@ export class TagController {
 
   @Get()
   index(): Promise<TagEntity[]> {
-    return this._tagRep.find({ relations: ['recipes'] });
+    return this._tagRep.find();
   }
 
   @Get('/:tag')

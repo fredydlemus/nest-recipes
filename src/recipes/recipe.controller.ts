@@ -14,7 +14,7 @@ export class RecipeController {
 
   @Get()
   index(): Promise<RecipeEntity[]> {
-    return this._recipeRep.find({ relations: ['category', 'tags', 'user'] });
+    return this._recipeRep.find();
   }
 
   @Get('/:recipe')
