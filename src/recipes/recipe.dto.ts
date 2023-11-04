@@ -1,34 +1,33 @@
-import { Expose, Transform, Type } from "class-transformer";
-import { CategoryEntity } from "src/categories/category.entity";
-import { UserEntity } from "src/users/user.entity";
+import { Expose, Transform, Type } from 'class-transformer';
+import { CategoryEntity } from 'src/categories/category.entity';
+import { UserEntity } from 'src/users/user.entity';
 
 export class RecipeDto {
+  @Expose()
+  id: number;
 
-    @Expose()
-    id: number;
+  @Expose()
+  title: string;
 
-    @Expose()
-    title: string;
+  @Expose()
+  description: string;
 
-    @Expose()
-    description: string;
+  @Expose()
+  ingredients: string;
 
-    @Expose()
-    ingredients: string;
+  @Expose()
+  directions: string;
 
-    @Expose()
-    directions: string;
+  @Expose()
+  image: string;
 
-    @Expose()
-    image: string;
+  @Expose()
+  category: CategoryEntity;
 
-    @Expose()
-    category: CategoryEntity;
+  @Expose()
+  user: UserEntity;
 
-    @Expose()
-    user: UserEntity;
-
-    @Expose()
-    @Transform(({ obj }) => obj.tags.map(tag => tag.name).join(', '))
-    tags: string;
+  @Expose()
+  @Transform(({ obj }) => obj.tags.map((tag) => tag.name).join(', '))
+  tags: string;
 }

@@ -9,7 +9,7 @@ import { FormatResponseInterceptor } from 'src/common/interceptors/format-respon
 export class TagController {
   constructor(
     @InjectRepository(TagEntity) private _tagRep: Repository<TagEntity>,
-  ) { }
+  ) {}
 
   @Get()
   index(): Promise<TagEntity[]> {

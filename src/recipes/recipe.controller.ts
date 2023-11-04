@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Put, Delete, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Delete,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecipeEntity } from 'src/recipes/recipe.entity';
@@ -13,7 +21,7 @@ export class RecipeController {
   constructor(
     @InjectRepository(RecipeEntity)
     private _recipeRep: Repository<RecipeEntity>,
-  ) { }
+  ) {}
 
   @Get()
   index(): Promise<RecipeEntity[]> {
@@ -31,11 +39,11 @@ export class RecipeController {
   }
 
   @Post()
-  store() { }
+  store() {}
 
   @Put()
-  update() { }
+  update() {}
 
   @Delete()
-  destroy() { }
+  destroy() {}
 }

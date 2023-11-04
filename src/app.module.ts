@@ -24,9 +24,9 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
           format: winston.format.combine(
             winston.format.timestamp(),
             winston.format.json(),
-          )
-        })
-      ]
+          ),
+        }),
+      ],
     }),
   ],
   controllers: [
@@ -35,6 +35,9 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
     TagController,
     RecipeController,
   ],
-  providers: [AppService, { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor }],
+  providers: [
+    AppService,
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+  ],
 })
-export class AppModule { }
+export class AppModule {}

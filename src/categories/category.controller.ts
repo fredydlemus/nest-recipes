@@ -10,7 +10,7 @@ export class CategoryController {
   constructor(
     @InjectRepository(CategoryEntity)
     private _categoryRep: Repository<CategoryEntity>,
-  ) { }
+  ) {}
 
   @Get()
   index(): Promise<CategoryEntity[]> {
