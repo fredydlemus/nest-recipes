@@ -12,7 +12,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { RecipeEntity } from 'src/recipes/recipe.entity';
 import { FormatResponseInterceptor } from 'src/common/interceptors/format-response.interceptor';
 import { RecipeDto } from './recipe.dto';
-import { plainToClass } from 'class-transformer';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
 
 @Controller('recipes')

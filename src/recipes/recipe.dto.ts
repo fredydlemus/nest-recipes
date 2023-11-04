@@ -1,4 +1,4 @@
-import { Expose, Transform, Type } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 import { CategoryEntity } from 'src/categories/category.entity';
 import { UserEntity } from 'src/users/user.entity';
 
