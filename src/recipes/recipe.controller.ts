@@ -15,6 +15,7 @@ import { RecipeEntity } from 'src/recipes/recipe.entity';
 import { FormatResponseInterceptor } from 'src/common/interceptors/format-response.interceptor';
 import { RecipeDto } from './recipe.dto';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
+import { CreateRecipeDto } from './create-recipe';
 
 @Controller('recipes')
 @UseInterceptors(FormatResponseInterceptor)
@@ -22,7 +23,7 @@ export class RecipeController {
   constructor(
     @InjectRepository(RecipeEntity)
     private _recipeRep: Repository<RecipeEntity>,
-  ) {}
+  ) { }
 
   @Get()
   index(): Promise<RecipeEntity[]> {
@@ -40,13 +41,13 @@ export class RecipeController {
   }
 
   @Post()
-  async store(@Body() payload: any) {
+  async store(@Body() payload: CreateRecipeDto) {
     const recipe = await this._recipeRep.create(payload);
     return this._recipeRep.save(recipe);
   }
 
   @Put('/:recipe')
-  async update(@Param('recipe') id: string, @Body() payload: any) {
+  async update(@Param('recipe') id: string, @Body() payload: Partial<CreateRecipeDto>) {
     const recipe = await this._recipeRep.findOne({
       where: { id: parseInt(id) },
     });
