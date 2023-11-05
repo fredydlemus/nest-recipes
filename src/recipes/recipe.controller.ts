@@ -7,7 +7,7 @@ import {
   Delete,
   UseInterceptors,
   Body,
-  HttpCode
+  HttpCode,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,7 +22,7 @@ export class RecipeController {
   constructor(
     @InjectRepository(RecipeEntity)
     private _recipeRep: Repository<RecipeEntity>,
-  ) { }
+  ) {}
 
   @Get()
   index(): Promise<RecipeEntity[]> {
