@@ -22,6 +22,13 @@ export class FormatResponseInterceptor<T>
   ): Observable<ResponseDTO<T>> {
     return next.handle().pipe(
       map((data) => {
+
+        if (context.switchToHttp().getResponse().statusCode === 204) {
+          return {
+            data: null,
+          }
+        }
+
         if (Array.isArray(data)) {
           return {
             data: data.map((item) => {
