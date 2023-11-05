@@ -6,6 +6,8 @@ import {
   Put,
   Delete,
   UseInterceptors,
+  Body,
+  HttpCode
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,7 +22,7 @@ export class RecipeController {
   constructor(
     @InjectRepository(RecipeEntity)
     private _recipeRep: Repository<RecipeEntity>,
-  ) {}
+  ) { }
 
   @Get()
   index(): Promise<RecipeEntity[]> {
@@ -38,11 +40,27 @@ export class RecipeController {
   }
 
   @Post()
-  store() {}
+  async store(@Body() payload: any) {
+    const recipe = await this._recipeRep.create(payload);
+    return this._recipeRep.save(recipe);
+  }
 
-  @Put()
-  update() {}
+  @Put('/:recipe')
+  async update(@Param('recipe') id: string, @Body() payload: any) {
+    const recipe = await this._recipeRep.findOne({
+      where: { id: parseInt(id) },
+    });
 
-  @Delete()
-  destroy() {}
+    return this._recipeRep.save({ ...recipe, ...payload });
+  }
+
+  @Delete('/:recipeId')
+  @HttpCode(204)
+  async destroy(@Param('recipeId') id: string) {
+    const recipe = await this._recipeRep.findOne({
+      where: { id: parseInt(id) },
+    });
+
+    await this._recipeRep.remove(recipe);
+  }
 }
