@@ -18,7 +18,8 @@ export const options = {
   migrations: ['dist/database/migrations/*.js'],
   migrationsTableName: 'migrations',
   seeds: [MainSeeder],
-  factories: [CategoriesFactory, RecipesFactory, TagsFactory, UsersFactory]
+  factories: [CategoriesFactory, RecipesFactory, TagsFactory, UsersFactory],
+  logging: ['query', 'error'],
 
 };
 
