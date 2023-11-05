@@ -9,16 +9,16 @@ import { FormatResponseInterceptor } from 'src/common/interceptors/format-respon
 export class TagController {
   constructor(
     @InjectRepository(TagEntity) private _tagRep: Repository<TagEntity>,
-  ) {}
+  ) { }
 
   @Get()
   index(): Promise<TagEntity[]> {
-    return this._tagRep.find();
+    return this._tagRep.find({ relations: ['recipes', 'recipes.category', 'recipes.tags', 'recipes.user'] });
   }
 
   @Get('/:tag')
   show(@Param('tag') tag: string): Promise<TagEntity> {
     const id = parseInt(tag);
-    return this._tagRep.findOne({ where: { id }, relations: ['recipes'] });
+    return this._tagRep.findOne({ where: { id }, relations: ['recipes', 'recipes.category', 'recipes.tags', 'recipes.user'] });
   }
 }

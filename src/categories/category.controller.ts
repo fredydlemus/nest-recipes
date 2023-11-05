@@ -10,7 +10,7 @@ export class CategoryController {
   constructor(
     @InjectRepository(CategoryEntity)
     private _categoryRep: Repository<CategoryEntity>,
-  ) {}
+  ) { }
 
   @Get()
   index(): Promise<CategoryEntity[]> {
@@ -21,6 +21,6 @@ export class CategoryController {
   async show(@Param('category') categoryId: string): Promise<CategoryEntity> {
     const id = parseInt(categoryId);
 
-    return this._categoryRep.findOne({ where: { id }, relations: ['recipes'] });
+    return this._categoryRep.findOne({ where: { id }, relations: ['recipes', 'recipes.category', 'recipes.tags', 'recipes.user'] });
   }
 }
